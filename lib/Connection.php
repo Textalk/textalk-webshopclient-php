@@ -9,8 +9,8 @@ use Tivoka\Client;
  *
  * One Connection holds a WebSocket with a context.
  *
- * Sometimes, you might want different contexted connections, e.g. one customer session and one
- * administrator context.  Then you might use one for default and
+ * You can let the Connection-class hold named instances by using Connection::getInstance('name')
+ * with different contexts (or even different backend URLs).
  */
 class Connection {
   //
@@ -39,6 +39,7 @@ class Connection {
    * To keep things separated clearly, you could initialize the default instance with the needed
    * context parameters, and in other parts of the code just use getInstance.
    *
+   * @param $name    string  Handler to get named instances
    * @param $context array   Context parameters (like webshop, session, auth...)
    * @param $backend string  Backend URL
    */

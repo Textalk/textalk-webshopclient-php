@@ -17,7 +17,7 @@ require(dirname(dirname(__FILE__)) . '/vendor/autoload.php');
 use Textalk\WebshopClient\Connection;
 use Textalk\WebshopClient\ApiClass;
 
-$connection = new Connection(array('webshop' => 22222));
+$connection = Connection::getInstance('default', array('webshop' => 22222));
 $assortment = new ApiClass('Assortment', $connection);
 
 var_dump($assortment->getArticlegroupUids());
@@ -40,7 +40,7 @@ require(dirname(dirname(__FILE__)) . '/vendor/autoload.php');
 use Textalk\WebshopClient\Connection;
 use Textalk\WebshopClient\Instance;
 
-$connection   = new Connection(array('webshop' => 22222));
+$connection   = Connection::getInstance('default', array('webshop' => 22222));
 $articlegroup = new Instance('Articlegroup', 1347891, $connection);
 
 var_dump($articlegroup->get('name'));
@@ -56,3 +56,19 @@ var_dump($articlegroup->get('name'));
 //   }
 // }
 ```
+
+
+Named Connections
+-----------------
+
+Normally, you only want ONE connection in your application.  You can use Connection::getInstance()
+and get the same Connection every time.
+
+You can let the Connection-class hold named instances by using Connection::getInstance('name')
+with different contexts (or even different backend URLs).  E.g.:
+
+    $admin_connection = Connection::getInstance('admin', array('auth' => $auth_token));
+
+... elsewhere in the code you can get the connection with:
+
+    $admin_connection = Connection::getInstance('admin');
