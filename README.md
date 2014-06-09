@@ -1,6 +1,9 @@
 Textalk Webshop API-client
 ==========================
 
+[![Build Status](https://travis-ci.org/Textalk/textalk-webshopclient-php.png)](https://travis-ci.org/Textalk/textalk-webshopclient-php)
+[![Coverage Status](https://coveralls.io/repos/Textalk/textalk-webshopclient-php/badge.png)](https://coveralls.io/r/Textalk/textalk-webshopclient-php)
+
 A library to simplify API-usage on Textalk Webshop API.
 
 
