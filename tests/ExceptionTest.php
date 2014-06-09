@@ -9,7 +9,7 @@ use Tivoka\Client;
 class ExceptionTest extends PHPUnit_Framework_TestCase {
   public function testUnspecifiedExceptionCode() {
     $connection = Client::connect('wss://shop.textalk.se/backend/jsonrpc/v1/');
-    $request    = $connection->sendRequest($method, $params);
+    $request    = $connection->sendRequest('Foo', 'bar');
 
     $request->error = 424242;
     try {

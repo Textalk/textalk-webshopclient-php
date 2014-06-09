@@ -1,11 +1,14 @@
 <phpunit
-    bootstrap        = "vendor/autoload.php"
-    stopOnError      = "true"
-    stopOnFailure    = "false"
-    stopOnIncomplete = "false"
-    stopOnSkipped    = "false"
-    strict           = "true"
-    verbose          = "true">
+    bootstrap                   = "tests/bootstrap.php"
+    convertErrorsToExceptions   = "true"
+    convertNoticesToExceptions  = "true"
+    convertWarningsToExceptions = "true"
+    stopOnError                 = "true"
+    stopOnFailure               = "false"
+    stopOnIncomplete            = "false"
+    stopOnSkipped               = "false"
+    strict                      = "true"
+    verbose                     = "true">
   <testsuites>
     <testsuite name="Tests">
       <directory suffix=".php">tests</directory>
