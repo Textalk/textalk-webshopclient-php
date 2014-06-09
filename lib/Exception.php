@@ -6,7 +6,15 @@ use Tivoka\Client\Request;
 
 class Exception extends \Exception {
   protected static $class_by_code = array(
-    '-32601' => 'MethodNotFound',
+    -32700 => 'ParseError',
+    -32600 => 'InvalidRequest',
+    -32601 => 'MethodNotFound',
+    -32602 => 'InvalidParams',
+    -32603 => 'InternalError',
+    -32000 => 'ServerError',
+    -32001 => 'ValidationFailed',
+    -32002 => 'AccessDenied',
+    -32003 => 'BadCall',
   );
 
   /**
