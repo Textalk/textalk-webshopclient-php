@@ -75,3 +75,16 @@ with different contexts (or even different backend URLs).  E.g.:
 ... elsewhere in the code you can get the connection with:
 
     $admin_connection = Connection::getInstance('admin');
+
+
+Using with Composer
+-------------------
+
+While the websocket-extension to Tivoka hasn't been merged yet, you have to add fetching tivoka from
+Textalk's fork by adding it to the repositories-part of composer.json:
+    "repositories": [
+      {
+        "type": "git",
+        "url":  "https://github.com/Textalk/tivoka.git"
+      }
+    ],
