@@ -1,9 +1,9 @@
 <?php
 
-use Textalk\ApiClient\Exception;
-use Textalk\ApiClient\ApiClass;
-use Textalk\ApiClient\Instance;
-use Textalk\ApiClient\Connection;
+use Textalk\WebshopClient\Exception;
+use Textalk\WebshopClient\ApiClass;
+use Textalk\WebshopClient\Instance;
+use Textalk\WebshopClient\Connection;
 use Tivoka\Client;
 
 class ExceptionTest extends PHPUnit_Framework_TestCase {
@@ -15,20 +15,20 @@ class ExceptionTest extends PHPUnit_Framework_TestCase {
     try {
       throw Exception::factory($connection, $request);
     }
-    catch (Textalk\ApiClient\Exception $e) {
-      $this->assertInstanceOf('Textalk\ApiClient\\Exception', $e);
+    catch (Textalk\WebshopClient\Exception $e) {
+      $this->assertInstanceOf('Textalk\WebshopClient\\Exception', $e);
     }
 
-    $this->assertNotNull($e, 'A Textalk\ApiClient\Exception should be thrown.');
+    $this->assertNotNull($e, 'A Textalk\WebshopClient\Exception should be thrown.');
   }
 
   public function testToStringWithData() {
     try {
-      $connection = Connection::getDefault(array('webshop' => 22222));
+      $connection = new Connection(array('webshop' => 22222));
       $new_order  = new Instance('Order', null, $connection);
       $new_order->set(array('language' => 'foo')); // Will not validate
     }
-    catch (Textalk\ApiClient\Exception $e) {
+    catch (Textalk\WebshopClient\Exception $e) {
       $string = "$e";
       $data   = $e->getData();
 
@@ -36,6 +36,6 @@ class ExceptionTest extends PHPUnit_Framework_TestCase {
       $this->assertInternalType('array', $data);
     }
 
-    $this->assertNotNull($e, 'A Textalk\ApiClient\Exception should be thrown.');
+    $this->assertNotNull($e, 'A Textalk\WebshopClient\Exception should be thrown.');
   }
 }

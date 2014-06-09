@@ -1,18 +1,18 @@
 <?php
 
-use Textalk\ApiClient\ApiClass;
-use Textalk\ApiClient\Connection;
+use Textalk\WebshopClient\ApiClass;
+use Textalk\WebshopClient\Connection;
 
 class ApiClassTest extends PHPUnit_Framework_TestCase {
   public function testInstatiate() {
     $class = new ApiClass('Foo');
 
     // No classname validation is done before first call.
-    $this->assertInstanceOf('Textalk\ApiClient\ApiClass', $class);
+    $this->assertInstanceOf('Textalk\WebshopClient\ApiClass', $class);
   }
 
   public function testContextCalls() {
-    $context = new ApiClass('Context');
+    $context      = new ApiClass('Context');
     $context_data = $context->get(true);
 
     $this->assertInternalType('array', $context_data);
@@ -20,8 +20,8 @@ class ApiClassTest extends PHPUnit_Framework_TestCase {
   }
 
   public function testGivenConnection() {
-    $connection = Connection::getDefault();
-    $context = new ApiClass('Context', $connection);
+    $connection   = new Connection();
+    $context      = new ApiClass('Context', $connection);
     $context_data = $context->get(true);
 
     $this->assertInternalType('array', $context_data);

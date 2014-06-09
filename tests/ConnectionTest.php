@@ -1,18 +1,20 @@
 <?php
 
-use Textalk\ApiClient\Connection;
+use Textalk\WebshopClient\Connection;
 
 class ConnectionTest extends PHPUnit_Framework_TestCase {
   public function testGetDefaultInstance() {
-    $connection = Connection::getDefault();
-    $this->assertInstanceOf('Textalk\ApiClient\Connection', $connection);
+    $connection = Connection::getInstance();
+    $this->assertInstanceOf('Textalk\WebshopClient\Connection', $connection);
 
-    $connection2 = Connection::getDefault();
+    $connection2 = Connection::getInstance();
     $this->assertSame($connection, $connection2);
   }
 
   public function testSimpleCall() {
-    $connection = Connection::getDefault(array('webshop' => 22222));
+    $connection = new Connection();
+
+    $connection->setContext(array('webshop' => 22222));
 
     $article_uids = $connection->call('Assortment.getArticleUids', array(1347898));
 
@@ -21,10 +23,10 @@ class ConnectionTest extends PHPUnit_Framework_TestCase {
 
   public function testMethodNotFound() {
     try {
-      $connection = Connection::getDefault(array('webshop' => 22222));
+      $connection = new Connection(array('webshop' => 22222));
       $dummy = $connection->call('Foo.bar', array());
     }
-    catch (Textalk\ApiClient\Exception\MethodNotFound $e) {
+    catch (Textalk\WebshopClient\Exception\MethodNotFound $e) {
       $request_json = $e->getRequestJson();
       $this->assertInternalType('string', $request_json);
 
@@ -40,7 +42,7 @@ class ConnectionTest extends PHPUnit_Framework_TestCase {
                           $e->getRequestUri());
     }
 
-    $this->assertNotNull($e, 'A Textalk\ApiClient\Exception\MethodNotFound should be thrown.');
+    $this->assertNotNull($e, 'A Textalk\WebshopClient\Exception\MethodNotFound should be thrown.');
   }
 
   // testChangeContext

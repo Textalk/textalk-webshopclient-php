@@ -1,6 +1,6 @@
 <?php
 
-namespace Textalk\ApiClient;
+namespace Textalk\WebshopClient;
 
 use Tivoka\Client\Request;
 
@@ -17,9 +17,10 @@ class Exception extends \Exception {
   public static function factory(\Tivoka\Client\Connection\WebSocket $connection,
                                  Request $request) {
     if (array_key_exists($request->error, self::$class_by_code)) {
-      $exception_class = 'Textalk\\ApiClient\\Exception\\' . self::$class_by_code[$request->error];
+      $exception_class
+        = 'Textalk\\WebshopClient\\Exception\\' . self::$class_by_code[$request->error];
     }
-    else ($exception_class = 'Textalk\\ApiClient\\Exception');
+    else ($exception_class = 'Textalk\\WebshopClient\\Exception');
 
     throw new $exception_class($connection, $request);
   }

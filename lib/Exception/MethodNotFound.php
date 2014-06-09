@@ -1,6 +1,6 @@
 <?php
 
-namespace Textalk\ApiClient\Exception;
-use Textalk\ApiClient\Exception;
+namespace Textalk\WebshopClient\Exception;
+use Textalk\WebshopClient\Exception;
 
 class MethodNotFound extends Exception {}

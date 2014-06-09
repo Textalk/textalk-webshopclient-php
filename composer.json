@@ -1,5 +1,5 @@
 {
-  "name": "textalk/textalk-api-client",
+  "name": "textalk/webshop-client",
   "description": "Textalk Webshop API-client",
   "license": "MIT",
   "authors": [
@@ -9,7 +9,7 @@
     }
   ],
   "autoload": {
-    "psr-4": {"Textalk\\ApiClient\\": "lib"}
+    "psr-4": {"Textalk\\WebshopClient\\": "lib"}
   },
   "repositories": [
     {

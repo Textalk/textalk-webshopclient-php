@@ -1,6 +1,6 @@
 <?php
 
-namespace Textalk\ApiClient;
+namespace Textalk\WebshopClient;
 
 /**
  * (Should have been called Class, but that's a reserved word in PHP.)
@@ -10,12 +10,12 @@ class ApiClass {
    * Get an instance representing an API class without UID.
    *
    * @param $class   string  Class name
-   * @param $connection Textalk\ApiClient\Connection|null The connection to use, or null for default
+   * @param $connection Textalk\WebshopClient\Connection|null The connection, or null for default
    */
   public function __construct($class, Connection $connection = null) {
     $this->class = $class;
 
-    if ($connection === null) $this->connection = Connection::getDefault();
+    if ($connection === null) $this->connection = new Connection();
     else                      $this->connection = $connection;
   }
 

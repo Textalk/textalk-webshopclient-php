@@ -1,6 +1,6 @@
 <?php
 
-namespace Textalk\ApiClient;
+namespace Textalk\WebshopClient;
 
 use Tivoka\Client;
 
@@ -13,26 +13,42 @@ use Tivoka\Client;
  * administrator context.  Then you might use one for default and
  */
 class Connection {
+  //
+  // Static
+  //
+
   protected static $default_backend = 'wss://shop.textalk.se/backend/jsonrpc/v1/';
-  protected static $instances = array();
 
-  protected function __construct($name, $backend, $context) {
-    $this->backend = $backend;
+  /**
+   * Make a new Connection
+   *
+   * @param $context array   Context parameters (like webshop, session, auth...)
+   * @param $backend string  Backend URL
+   */
+  public function __construct($context = array(), $backend = null) {
+    $this->backend = empty($backend) ? self::$default_backend : $backend;
     $this->context = $context;
-
-    self::$instances[$name] = $this;
   }
 
-  public static function getDefault($context = array()) {
-    if (isset(self::$instances['default'])) {
-      $connection = self::$instances['default'];
-      $connection->setContext($context);
-      return $connection;
-    }
+  /**
+   * Get a named instance, or initialise it
+   *
+   * To avoid creting multiple connections to the same backend, use names instances to get your
+   * handle.
+   *
+   * To keep things separated clearly, you could initialize the default instance with the needed
+   * context parameters, and in other parts of the code just use getInstance.
+   *
+   * @param $context array   Context parameters (like webshop, session, auth...)
+   * @param $backend string  Backend URL
+   */
+  public static function getInstance($name = 'default', $context = array(), $backend = null) {
+    static $instances = array();
 
-    return new self('default', self::$default_backend, $context);
+    if (array_key_exists($name, $instances)) return $instances[$name];
+
+    return $instances[$name] = new self($context, $backend);
   }
-
 
   //
   // Public
@@ -45,9 +61,6 @@ class Connection {
     if (!isset($this->connection)) $this->connect();
 
     $request = $this->connection->sendRequest($method, $params);
-
-    //var_dump($this->connection);
-    //var_dump($request);
 
     if ($request->error) throw Exception::factory($this->connection, $request);
 
@@ -79,6 +92,11 @@ class Connection {
   protected $backend;    ///< string Backend URL (without context)
   protected $context;    ///< array  Associative array of context parameters
 
+  /**
+   * This creates the tivoka connection
+   *
+   * Actually, it doesn't really connect to the api endpoint, it JUST created the tivoka connection.
+   */
   protected function connect() {
     $backend_uri = $this->backend;
     if (!empty($this->context)) $backend_uri .= '?' . http_build_query($this->context);

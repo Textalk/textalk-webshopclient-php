@@ -1,6 +1,6 @@
 <?php
 
-namespace Textalk\ApiClient;
+namespace Textalk\WebshopClient;
 
 /**
  * A class representing one instance in the API.
@@ -20,7 +20,7 @@ class Instance {
    *
    * @param $class      string                            The API class name
    * @param $uid        string|integer                    The API instance UID
-   * @param $connection Textalk\ApiClient\Connection|null The connection to use, or null for default
+   * @param $connection Textalk\WebshopClient\Connection|null The connection, or null for default
    */
   public function __construct($class, $uid, Connection $connection = null) {
     $this->class = $class;
@@ -43,5 +43,5 @@ class Instance {
 
   protected $class; ///< The API class name
   protected $uid;   ///< The API instance UID
-  protected $connection; ///< The Textalk\ApiClient\Connection to use
+  protected $connection; ///< The Textalk\WebshopClient\Connection to use
 }

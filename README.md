@@ -4,6 +4,9 @@ Textalk Webshop API-client
 A library to simplify API-usage on Textalk Webshop API.
 
 
+Examples:
+---------
+
 To get all articlegroups on root level on the Demoshop, you could do:
 
 ```php
@@ -11,8 +14,8 @@ To get all articlegroups on root level on the Demoshop, you could do:
 
 require(dirname(dirname(__FILE__)) . '/vendor/autoload.php');
 
-use Textalk\ApiClient\Connection;
-use Textalk\ApiClient\ApiClass;
+use Textalk\WebshopClient\Connection;
+use Textalk\WebshopClient\ApiClass;
 
 $connection = Connection::getDefault(array('webshop' => 22222));
 $assortment = new ApiClass('Assortment', $connection);
@@ -34,8 +37,8 @@ To get the name of article with UID 12565609 on webshop 22222 in all languages:
 ```php
 require(dirname(dirname(__FILE__)) . '/vendor/autoload.php');
 
-use Textalk\ApiClient\Connection;
-use Textalk\ApiClient\Instance;
+use Textalk\WebshopClient\Connection;
+use Textalk\WebshopClient\Instance;
 
 $connection   = Connection::getDefault(array('webshop' => 22222));
 $articlegroup = new Instance('Articlegroup', 1347891, $connection);
