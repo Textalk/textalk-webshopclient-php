@@ -9,7 +9,7 @@ namespace Textalk\WebshopClient;
  *
  * Example:
  *
- * $connection = Connection::getDefault(array('webshop' => 22222));
+ * $connection = Connection::getInstance(array('webshop' => 22222));
  * $article = new Instance('Article', 12565609, $connection);
  *
  * $article_data = $article->get(array('name' => 'sv', 'articlegroup' => true));
