@@ -33,7 +33,7 @@ class Connection {
   /**
    * Get a named instance, or initialise it
    *
-   * To avoid creting multiple connections to the same backend, use names instances to get your
+   * To avoid creating multiple connections to the same backend, use named instances to get your
    * handle.
    *
    * To keep things separated clearly, you could initialize the default instance with the needed
@@ -96,7 +96,7 @@ class Connection {
   /**
    * This creates the tivoka connection
    *
-   * Actually, it doesn't really connect to the api endpoint, it JUST created the tivoka connection.
+   * Actually, it doesn't really connect to the api endpoint, it JUST creates the tivoka connection.
    */
   protected function connect() {
     $backend_uri = $this->backend;
