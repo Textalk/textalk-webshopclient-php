@@ -19,7 +19,4 @@ class InstanceTest extends PHPUnit_Framework_TestCase {
     $article_data = $article->get(array('name' => 'sv', 'articlegroup' => true));
     $this->assertArrayHasKey('name', $article_data);
   }
-
-
-  // testUsingDefaultConnection
 }

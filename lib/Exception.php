@@ -75,7 +75,7 @@ class Exception extends \Exception {
   /**
    * Construct a new Exception.
    *
-   * This can't protected since it extends Exception, but it should'nt be used.  Use factory.
+   * This can't be protected since it extends Exception, but it shouldn't be used.  Use factory.
    */
   public function __construct(\Tivoka\Client\Connection\WebSocket $connection, Request $request) {
     $this->request    = $request;

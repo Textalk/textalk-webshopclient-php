@@ -35,7 +35,7 @@ var_dump($assortment->getArticlegroupUids());
 ```
 
 
-To get the name of article with UID 12565609 on webshop 22222 in all languages:
+To get the name of articlegroup with UID 1347897 on webshop 22222 in all languages:
 
 ```php
 require(dirname(dirname(__FILE__)) . '/vendor/autoload.php');
