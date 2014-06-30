@@ -85,7 +85,7 @@ Preferred way to install is with [Composer](https://getcomposer.org/).
 Just add
 
     "require": {
-      "textalk/webshop-client": "0.1.0"
+      "textalk/webshop-client": "0.1.1"
     }
 
 in your projects composer.json.
