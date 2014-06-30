@@ -45,7 +45,15 @@ class ConnectionTest extends PHPUnit_Framework_TestCase {
     $this->assertNotNull($e, 'A Textalk\WebshopClient\Exception\MethodNotFound should be thrown.');
   }
 
-  // testChangeContext
+  public function testChangeContext() {
+    $connection = new Connection();
 
-  // testExceptionDebugInfo (containing URI and full request)
+    // Make a call to be sure there is a connection.
+    $initial_context = $connection->call('Context.get', array(true));
+    $this->assertEmpty($initial_context['webshop']);
+
+    $connection->setContext(array('webshop' => 22222));
+    $new_context = $connection->call('Context.get', array(true));
+    $this->assertSame(22222, $new_context['webshop']);
+  }
 }

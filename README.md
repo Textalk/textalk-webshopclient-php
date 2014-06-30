@@ -35,7 +35,7 @@ var_dump($assortment->getArticlegroupUids());
 ```
 
 
-To get the name of article with UID 12565609 on webshop 22222 in all languages:
+To get the name of articlegroup with UID 1347897 on webshop 22222 in all languages:
 
 ```php
 require(dirname(dirname(__FILE__)) . '/vendor/autoload.php');
@@ -77,14 +77,14 @@ with different contexts (or even different backend URLs).  E.g.:
     $admin_connection = Connection::getInstance('admin');
 
 
-Using with Composer
--------------------
+Installing
+----------
 
-While the websocket-extension to Tivoka hasn't been merged yet, you have to add fetching tivoka from
-Textalk's fork by adding it to the repositories-part of composer.json:
-    "repositories": [
-      {
-        "type": "git",
-        "url":  "https://github.com/Textalk/tivoka.git"
-      }
-    ],
+Preferred way to install is with [Composer](https://getcomposer.org/).
+
+Just add
+    "require": {
+      "textalk/webshop-client": "0.1.0"
+    }
+
+in your projects composer.json.
