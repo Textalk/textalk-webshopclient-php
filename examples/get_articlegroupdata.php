@@ -6,6 +6,6 @@ use Textalk\WebshopClient\Connection;
 use Textalk\WebshopClient\Instance;
 
 $connection   = Connection::getInstance('default', array('webshop' => 22222));
-$articlegroup = new Instance('Articlegroup', 1347891, $connection);
+$articlegroup = new ApiInstance('Articlegroup', 1347891, $connection);
 
 var_dump($articlegroup->get('name'));
