@@ -1,6 +1,6 @@
 <?php
 
-use Textalk\WebshopClient\Instance;
+use Textalk\WebshopClient\ApiInstance;
 use Textalk\WebshopClient\Connection;
 
 class ApiInstanceTest extends PHPUnit_Framework_TestCase {
