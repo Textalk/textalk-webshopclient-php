@@ -8,7 +8,7 @@ class ApiInstanceTest extends PHPUnit_Framework_TestCase {
     $instance = new ApiInstance('Foo', 'bar');
 
     // No classname validation is done before first call.
-    $this->assertInstanceOf('Textalk\WebshopClient\Instance', $instance);
+    $this->assertInstanceOf('Textalk\WebshopClient\ApiInstance', $instance);
   }
 
   public function testGetArticleData() {
