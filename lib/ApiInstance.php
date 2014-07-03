@@ -14,7 +14,7 @@ namespace Textalk\WebshopClient;
  *
  * $article_data = $article->get(array('name' => 'sv', 'articlegroup' => true));
  */
-class Instance {
+class ApiInstance {
   /**
    * Get an instance representing one instance in the API.
    *
