@@ -84,6 +84,26 @@ class Connection {
     $this->connection = null;
   }
 
+  /**
+   * Get an ApiClass for this connection.
+   *
+   * @param $class      string                            Class name
+   * @return            Textalk\WebshopClient\ApiClass
+   */
+  public function getApiClass($class) {
+    return new ApiClass($class, $this);
+  }
+
+  /**
+   * Get an ApiInstance for this connection.
+   *
+   * @param $class      string                            Class name
+   * @param $uid        string|integer                    The API instance UID
+   * @return            Textalk\WebshopClient\ApiInstance
+   */
+  public function getApiInstance($class, $uid) {
+    return new ApiInstance($class, $uid, $this);
+  }
 
   //
   // Protected

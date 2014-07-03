@@ -19,4 +19,13 @@ class ApiInstanceTest extends PHPUnit_Framework_TestCase {
     $article_data = $article->get(array('name' => 'sv', 'articlegroup' => true));
     $this->assertArrayHasKey('name', $article_data);
   }
+
+  public function testConnectionGetMethod() {
+    $connection = new Connection();
+    $class = $connection->getApiInstance('Foo', 'bar');
+
+    // No classname validation is done before first call.
+    $this->assertInstanceOf('Textalk\WebshopClient\ApiInstance', $class);
+  }
+
 }

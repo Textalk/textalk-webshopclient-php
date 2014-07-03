@@ -27,4 +27,12 @@ class ApiClassTest extends PHPUnit_Framework_TestCase {
     $this->assertInternalType('array', $context_data);
     $this->assertArrayHasKey('language', $context_data);
   }
+
+  public function testConnectionGetMethod() {
+    $connection = new Connection();
+    $class = $connection->getApiClass('Foo');
+
+    // No classname validation is done before first call.
+    $this->assertInstanceOf('Textalk\WebshopClient\ApiClass', $class);
+  }
 }
