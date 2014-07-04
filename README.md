@@ -21,8 +21,6 @@ use Textalk\WebshopClient\Connection;
 use Textalk\WebshopClient\ApiClass;
 
 $connection = Connection::getInstance('default', array('webshop' => 22222));
-$assortment = $connection->getApiClass('Assortment');
-// or by magic method
 $assortment = $connection->Assortment;
 
 var_dump($assortment->getArticlegroupUids());
@@ -46,8 +44,6 @@ use Textalk\WebshopClient\Connection;
 use Textalk\WebshopClient\ApiInstance;
 
 $connection   = Connection::getInstance('default', array('webshop' => 22222));
-$articlegroup = $connection->getApiInstance('Articlegroup', 1347891);
-// or by magic method
 $articlegroup = $connection->Articlegroup(1347891);
 
 var_dump($articlegroup->get('name'));

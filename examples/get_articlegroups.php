@@ -6,6 +6,6 @@ use Textalk\WebshopClient\Connection;
 use Textalk\WebshopClient\ApiClass;
 
 $connection = Connection::getInstance('default', array('webshop' => 22222));
-$assortment = $connection->getApiClass('Assortment');
+$assortment = $connection->Assortment;
 
 var_dump($assortment->getArticlegroupUids());
