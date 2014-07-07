@@ -35,4 +35,13 @@ class ApiClassTest extends PHPUnit_Framework_TestCase {
     // No classname validation is done before first call.
     $this->assertInstanceOf('Textalk\WebshopClient\ApiClass', $class);
   }
+
+  public function testMagicMethod() {
+    $connection = new Connection();
+    $class = $connection->Foo;
+
+    // No classname validation is done before first call.
+    $this->assertInstanceOf('Textalk\WebshopClient\ApiClass', $class);
+  }
+
 }

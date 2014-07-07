@@ -106,6 +106,32 @@ class Connection {
   }
 
   //
+  // Magic methods
+  //
+
+  /**
+   * Get an ApiClass for this connection.
+   *
+   * @param $class      string                            Class name
+   * @return            Textalk\WebshopClient\ApiClass
+   */
+  public function __get($class) {
+    return new ApiClass(ucfirst($class), $this);
+  }
+
+  /**
+   * Get an ApiInstance for this connection.
+   *
+   * @param $class      string                            Class name
+   * @param $args       array                             The API instance UID as only item
+   * @return            Textalk\WebshopClient\ApiInstance
+   */
+  public function __call($class, array $args) {
+    $uid = array_shift($args); // $uid becomes null if array is empty
+    return new ApiInstance(ucfirst($class), $uid, $this);
+  }
+
+  //
   // Protected
   //
 

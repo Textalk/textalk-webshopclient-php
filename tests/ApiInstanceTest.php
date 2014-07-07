@@ -28,4 +28,12 @@ class ApiInstanceTest extends PHPUnit_Framework_TestCase {
     $this->assertInstanceOf('Textalk\WebshopClient\ApiInstance', $class);
   }
 
+  public function testMagicMethod() {
+    $connection = new Connection();
+    $class = $connection->Foo('bar');
+
+    // No classname validation is done before first call.
+    $this->assertInstanceOf('Textalk\WebshopClient\ApiInstance', $class);
+  }
+
 }
