@@ -58,7 +58,7 @@ class Connection {
   /**
    * Make a request to the backend.
    */
-  public function call($method, $params) {
+  public function call($method, $params = null) {
     if (!isset($this->connection)) $this->connect();
 
     $request = $this->connection->sendRequest($method, $params);
@@ -103,6 +103,16 @@ class Connection {
    */
   public function getApiInstance($class, $uid) {
     return new ApiInstance($class, $uid, $this);
+  }
+
+  public function getSession() {
+    if (array_key_exists('session', $this->context)) return $this->context['session'];
+
+    $this->context['session'] = $this->call('Session.getToken');
+    /// @todo Call Context.set({"session":"53f32a921ad53"}) when that is available.
+    $this->connection = null;
+
+    return $this->context['session'];
   }
 
   //
