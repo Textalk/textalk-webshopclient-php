@@ -56,4 +56,24 @@ class ConnectionTest extends PHPUnit_Framework_TestCase {
     $new_context = $connection->call('Context.get', array(true));
     $this->assertSame(22222, $new_context['webshop']);
   }
+
+  public function testGetSession() {
+    $connection = new Connection(array('webshop' => 22222));
+
+    // Make a call to be sure there is a connection.
+    $initial_context = $connection->call('Context.get', array(true));
+    $this->assertEmpty($initial_context['session']);
+
+    $session1 = $connection->getSession();
+    $this->assertNotEmpty($session1);
+
+    $context1 = $connection->call('Context.get', array(true));
+    $this->assertEquals($session1, $context1['session']);
+
+    // Make sure it won't change the session once gotten.
+    $session2 = $connection->getSession();
+    $context2 = $connection->call('Context.get', array(true));
+    $this->assertEquals($session1, $session2);
+    $this->assertEquals($session2, $context2['session']);
+  }
 }
