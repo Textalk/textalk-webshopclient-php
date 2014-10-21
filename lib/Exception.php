@@ -12,9 +12,8 @@ class Exception extends \Exception {
     -32602 => 'InvalidParams',
     -32603 => 'InternalError',
     -32000 => 'ServerError',
-    -32001 => 'ValidationFailed',
-    -32002 => 'AccessDenied',
-    -32003 => 'BadCall',
+     1006  => 'AccessDenied',
+     9001  => 'ValidationFailed',
   );
 
   /**
