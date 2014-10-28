@@ -66,9 +66,9 @@ class Exception extends \Exception {
   }
 
   protected function formatMessage() {
-    $method            = $this->request->method;
-    $message           = $this->getMessage();
-    $data              = $this->request->errorData;
+    $method  = $this->request->method;
+    $message = $this->request->errorMessage;
+    $data    = $this->request->errorData;
 
     $phpversion = explode('.', phpversion());
 
@@ -81,9 +81,9 @@ class Exception extends \Exception {
         $json_encode_flags = JSON_PRETTY_PRINT;
       }
 
-      $output .= "\nData: " . json_encode($data, $json_encode_flags);
+      $output .= "\nError data: " . json_encode($data, $json_encode_flags);
     }
-    $output .= "\nRequest: " . $this->request->request;
+    $output .= "\nOn request: " . $this->request->request;
 
     return $output;
   }
