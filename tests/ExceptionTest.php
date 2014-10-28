@@ -22,14 +22,14 @@ class ExceptionTest extends PHPUnit_Framework_TestCase {
     $this->assertNotNull($e, 'A Textalk\WebshopClient\Exception should be thrown.');
   }
 
-  public function testToStringWithData() {
+  public function testGetMessageWithData() {
     try {
       $connection = new Connection(array('webshop' => 22222));
       $new_order  = new ApiInstance('Order', null, $connection);
       $new_order->set(array('language' => 'foo')); // Will not validate
     }
     catch (Textalk\WebshopClient\Exception $e) {
-      $string = "$e";
+      $string = $e->getMessage();
       $data   = $e->getData();
 
       $this->assertRegExp('/^Order.set: /', $string);
