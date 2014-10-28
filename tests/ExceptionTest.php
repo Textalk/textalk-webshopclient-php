@@ -22,18 +22,20 @@ class ExceptionTest extends PHPUnit_Framework_TestCase {
     $this->assertNotNull($e, 'A Textalk\WebshopClient\Exception should be thrown.');
   }
 
-  public function testToStringWithData() {
+  public function testGetMessageWithData() {
     try {
       $connection = new Connection(array('webshop' => 22222));
-      $new_order  = new ApiInstance('Order', null, $connection);
-      $new_order->set(array('language' => 'foo')); // Will not validate
+
+      // Make an invalid set call.
+      $connection->Context->set(array('webshop' => 'Bad shop'), true);
     }
     catch (Textalk\WebshopClient\Exception $e) {
-      $string = "$e";
+      $string = $e->getMessage();
       $data   = $e->getData();
 
-      $this->assertRegExp('/^Order.set: /', $string);
-      $this->assertInternalType('array', $data);
+      $this->assertRegExp('/^Context.set: Invalid params./', $string);
+      $this->assertRegExp('/Error data:/', $string);
+      $this->assertRegExp('/On request:/', $string);
     }
 
     $this->assertNotNull($e, 'A Textalk\WebshopClient\Exception should be thrown.');
