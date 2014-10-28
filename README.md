@@ -85,7 +85,16 @@ Preferred way to install is with [Composer](https://getcomposer.org/).
 Just add
 
     "require": {
-      "textalk/webshop-client": "0.1.4"
+      "textalk/webshop-client": "0.2.*"
     }
 
 in your projects composer.json.
+
+
+Changelog
+---------
+
+0.2.0
+
+ * Explicitly always using WebSocket connection.
+ * Adding possibility to set options for connection, like headers and timeout.
