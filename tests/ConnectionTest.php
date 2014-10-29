@@ -76,4 +76,20 @@ class ConnectionTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals($session1, $session2);
     $this->assertEquals($session2, $context2['session']);
   }
+
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testMagicCallShouldFailWithoutUid() {
+    $api = new Connection(array('webshop' => 22222));
+    $instance = $api->Foo();
+  }
+
+  /**
+   * @expectedException InvalidArgumentException
+   */
+  public function testMagicCallShouldFailWithSeveralUids() {
+    $api = new Connection(array('webshop' => 22222));
+    $instance = $api->Foo(1, 2);
+  }
 }

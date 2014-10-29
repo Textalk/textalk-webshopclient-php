@@ -137,7 +137,13 @@ class Connection {
    * @return            Textalk\WebshopClient\ApiInstance
    */
   public function __call($class, array $args) {
-    $uid = array_shift($args); // $uid becomes null if array is empty
+    if (count($args) !== 1) {
+      throw new \InvalidArgumentException(
+        'To get an ApiInstance from Connection, you must give UID as the only parameter.'
+      );
+    }
+
+    $uid = array_shift($args);
     return new ApiInstance($class, $uid, $this);
   }
 
