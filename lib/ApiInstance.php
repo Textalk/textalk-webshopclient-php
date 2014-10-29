@@ -18,6 +18,14 @@ class ApiInstance {
   /**
    * Get an instance representing one instance in the API.
    *
+   * UID could be null to create a new instance, but this is NOT recommended: using the same handle
+   * multiple times would result in several new instances on the backend.  The recommended way
+   * would be to first create the instance on the backend, and then use the UID to get an
+   * ApiInstance handle:
+   *
+   * $article_uid = $api->Article->set(null, array('name' => array('en' => 'New article')), 'uid')
+   * $article = $api->Article($uid)
+   *
    * @param $class      string                            The API class name
    * @param $uid        string|integer                    The API instance UID
    * @param $connection Textalk\WebshopClient\Connection|null The connection, or null for default
