@@ -57,8 +57,6 @@ var_dump(
 You can save a handle to the API for a specific instance:
 
 ```php
-<?php
-
 $api = Connection::getInstance('default', array('webshop' => 22222));
 
 // Save a handle to the API for a single Articlegroup:
@@ -84,6 +82,21 @@ var_dump(
 //     string(4) "Herr"
 //   }
 // }
+```
+
+
+If you mess up, you will get specific exceptions and see the actual request:
+
+```php
+// This line won't actually DO anything, so it won't crasch:
+$scissor = $api->IDontKnow("What I'm doing");
+
+// But this will:
+$scissor->run();
+
+// -->
+// PHP Fatal error:  Uncaught exception 'Textalk\WebshopClient\Exception\MethodNotFound' with message 'IDontKnow.run: Method not found: No API for IDontKnow
+// On request: {"jsonrpc":"2.0","method":"IDontKnow.run","id":"7089b561-9252-4a0a-b45b-15a873509571","params":["What I'm doing"]}' in /home/liljegren/textalk-webshopclient-php/lib/Exception.php:32
 ```
 
 
