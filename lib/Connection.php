@@ -2,7 +2,7 @@
 
 namespace Textalk\WebshopClient;
 
-use Tivoka\Client;
+use Tivoka\Client\Connection\WebSocket;
 
 /**
  * A Connection is the main API-handler.
@@ -22,12 +22,17 @@ class Connection {
   /**
    * Make a new Connection
    *
-   * @param $context array   Context parameters (like webshop, session, auth...)
-   * @param $backend string  Backend URL
+   * @param  array   $context   Context parameters (like webshop, session, auth...)
+   * @param  string  $backend  Backend URL for WebSocket
+   * @param  array   $options
+   *   Associative array containing:
+   *   - headers:  Request headers to add/override.
+   *   - timeout:  Timeout in seconds.
    */
-  public function __construct($context = array(), $backend = null) {
+  public function __construct($context = array(), $backend = null, $options = array()) {
     $this->backend = empty($backend) ? self::$default_backend : $backend;
     $this->context = $context;
+    $this->options = $options;
   }
 
   /**
@@ -39,11 +44,16 @@ class Connection {
    * To keep things separated clearly, you could initialize the default instance with the needed
    * context parameters, and in other parts of the code just use getInstance.
    *
-   * @param $name    string  Handler to get named instances
-   * @param $context array   Context parameters (like webshop, session, auth...)
-   * @param $backend string  Backend URL
+   * @param  string  $name     Handler to get named instances
+   * @param  array   $context  Context parameters (like webshop, session, auth...)
+   * @param  string  $backend  Backend URL
+   * @param  array   $options
+   *   Associative array containing:
+   *   - headers:  Request headers to add/override.
+   *   - timeout:  Timeout in seconds.
    */
-  public static function getInstance($name = 'default', $context = array(), $backend = null) {
+  public static function getInstance($name = 'default', $context = array(), $backend = null,
+                                     $options = array()) {
     static $instances = array();
 
     if (array_key_exists($name, $instances)) return $instances[$name];
@@ -163,6 +173,6 @@ class Connection {
   protected function connect() {
     $backend_uri = $this->backend;
     if (!empty($this->context)) $backend_uri .= '?' . http_build_query($this->context);
-    $this->connection = Client::connect($backend_uri);
+    $this->connection = new WebSocket($backend_uri, $this->options);
   }
 }

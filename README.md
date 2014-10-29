@@ -135,4 +135,6 @@ Changelog
 
 0.2.0
 
+ * Explicitly always using WebSocket connection.
+ * Adding possibility to set options for connection, like headers and timeout.
  * Removed case-juggling in class name magic; use correct casing!
