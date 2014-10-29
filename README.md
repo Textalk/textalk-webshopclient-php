@@ -54,62 +54,36 @@ var_dump(
 ```
 
 
-To get the name and UID of the first three articles in articlegroup 1347891:
+You can save a handle to the API for a specific instance:
 
 ```php
 <?php
 
-require(dirname(dirname(__FILE__)) . '/vendor/autoload.php');
-
-use Textalk\WebshopClient\Connection;
-
 $api = Connection::getInstance('default', array('webshop' => 22222));
 
+// Save a handle to the API for a single Articlegroup:
+$articlegroup = $api->Articlegroup(1347891);
+
+// Get all names:
+// These are all equivalent:
+//
+//  * $api->Articlegroup(1347891)->get('name')
+//  * $api->Articlegroup->get(1347891, 'name')
+//  * $api->call('Articlegroup.get', array(1347891, 'name'))
 var_dump(
-  $api->Article->list(
-    array("name" => "sv", "uid" => true),
-    array(
-      "limit" => 3,
-      "filters" => array(
-        "/showInArticlegroups" => array("contains" => 1347891)
-      )
-    )
-  )
+  $articlegroup->get('name')
 );
 
 // Will produce:
-array(3) {
-  [0] =>
-  array(2) {
-    'name' =>
-    array(1) {
-      'sv' =>
-      string(16) "In hac habitasse"
-    }
-    'uid' =>
-    int(12565483)
-  }
-  [1] =>
-  array(2) {
-    'name' =>
-    array(1) {
-      'sv' =>
-      string(22) "Vivamus nec metus nunc"
-    }
-    'uid' =>
-    int(12565484)
-  }
-  [2] =>
-  array(2) {
-    'name' =>
-    array(1) {
-      'sv' =>
-      string(17) "Aenean quis purus"
-    }
-    'uid' =>
-    int(12565485)
-  }
-}
+// array(1) {
+//   'name' =>
+//   array(2) {
+//     'en' =>
+//     string(3) "Men"
+//     'sv' =>
+//     string(4) "Herr"
+//   }
+// }
 ```
 
 
