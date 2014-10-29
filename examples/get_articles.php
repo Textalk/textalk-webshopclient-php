@@ -7,8 +7,13 @@ use Textalk\WebshopClient\Connection;
 $api = Connection::getInstance('default', array('webshop' => 22222));
 
 var_dump(
-  $api->Articlegroup->list(
+  $api->Article->list(
     array("name" => "sv", "uid" => true),
-    array("limit" => 2)
+    array(
+      "limit" => 3,
+      "filters" => array(
+        "/showInArticlegroups" => array("contains" => 1347891)
+      )
+    )
   )
 );

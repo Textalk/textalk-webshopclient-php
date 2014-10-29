@@ -126,7 +126,7 @@ class Connection {
    * @return            Textalk\WebshopClient\ApiClass
    */
   public function __get($class) {
-    return new ApiClass(ucfirst($class), $this);
+    return new ApiClass($class, $this);
   }
 
   /**
@@ -138,7 +138,7 @@ class Connection {
    */
   public function __call($class, array $args) {
     $uid = array_shift($args); // $uid becomes null if array is empty
-    return new ApiInstance(ucfirst($class), $uid, $this);
+    return new ApiInstance($class, $uid, $this);
   }
 
   //

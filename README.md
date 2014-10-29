@@ -10,7 +10,7 @@ A library to simplify API-usage on Textalk Webshop API.
 Examples:
 ---------
 
-To get all articlegroups on root level on the Demoshop, you could do:
+To get the name in Swedish (sv) of the first 2 articlegroups on the Demoshop, you could do:
 
 ```php
 <?php
@@ -18,46 +18,98 @@ To get all articlegroups on root level on the Demoshop, you could do:
 require(dirname(dirname(__FILE__)) . '/vendor/autoload.php');
 
 use Textalk\WebshopClient\Connection;
-use Textalk\WebshopClient\ApiClass;
 
-$connection = Connection::getInstance('default', array('webshop' => 22222));
-$assortment = $connection->Assortment;
+$api = Connection::getInstance('default', array('webshop' => 22222));
 
-var_dump($assortment->getArticlegroupUids());
+var_dump(
+  $api->Articlegroup->list(
+    array("name" => "sv", "uid" => true),
+    array("limit" => 2)
+  )
+);
 
 // Will produce:
 // array(2) {
 //   [0] =>
-//   int(1347891)
+//   array(2) {
+//     'name' =>
+//     array(1) {
+//       'sv' =>
+//       string(4) "Herr"
+//     }
+//     'uid' =>
+//     int(1347891)
+//   }
 //   [1] =>
-//   int(1347897)
+//   array(2) {
+//     'name' =>
+//     array(1) {
+//       'sv' =>
+//       string(3) "Dam"
+//     }
+//     'uid' =>
+//     int(1347897)
+//   }
 // }
 ```
 
 
-To get the name of articlegroup with UID 1347897 on webshop 22222 in all languages:
+To get the name and UID of the first three articles in articlegroup 1347891:
 
 ```php
+<?php
+
 require(dirname(dirname(__FILE__)) . '/vendor/autoload.php');
 
 use Textalk\WebshopClient\Connection;
-use Textalk\WebshopClient\ApiInstance;
 
-$connection   = Connection::getInstance('default', array('webshop' => 22222));
-$articlegroup = $connection->Articlegroup(1347891);
+$api = Connection::getInstance('default', array('webshop' => 22222));
 
-var_dump($articlegroup->get('name'));
+var_dump(
+  $api->Article->list(
+    array("name" => "sv", "uid" => true),
+    array(
+      "limit" => 3,
+      "filters" => array(
+        "/showInArticlegroups" => array("contains" => 1347891)
+      )
+    )
+  )
+);
 
 // Will produce:
-// array(1) {
-//   'name' =>
-//   array(2) {
-//     'sv' =>
-//     string(4) "Herr"
-//     'en' =>
-//     string(3) "Men"
-//   }
-// }
+array(3) {
+  [0] =>
+  array(2) {
+    'name' =>
+    array(1) {
+      'sv' =>
+      string(16) "In hac habitasse"
+    }
+    'uid' =>
+    int(12565483)
+  }
+  [1] =>
+  array(2) {
+    'name' =>
+    array(1) {
+      'sv' =>
+      string(22) "Vivamus nec metus nunc"
+    }
+    'uid' =>
+    int(12565484)
+  }
+  [2] =>
+  array(2) {
+    'name' =>
+    array(1) {
+      'sv' =>
+      string(17) "Aenean quis purus"
+    }
+    'uid' =>
+    int(12565485)
+  }
+}
 ```
 
 
@@ -85,7 +137,15 @@ Preferred way to install is with [Composer](https://getcomposer.org/).
 Just add
 
     "require": {
-      "textalk/webshop-client": "0.1.4"
+      "textalk/webshop-client": "0.2.*"
     }
 
 in your projects composer.json.
+
+
+Changelog
+---------
+
+0.2.0
+
+ * Removed case-juggling in class name magic; use correct casing!
