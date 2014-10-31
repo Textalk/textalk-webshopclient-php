@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "531d302acded6972a52eac43b2458299",
+    "hash": "f451f8b23a980dc8f2bb68312bc0f0ea",
     "packages": [
         {
             "name": "textalk/websocket",
@@ -46,16 +46,16 @@
         },
         {
             "name": "tivoka/tivoka",
-            "version": "dev-dev-websocket-options",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/marcelklehr/tivoka.git",
-                "reference": "c2ce38abf5f3ff2b56bba1b42844634de3c4c021"
+                "reference": "b1eec80e0acdf8e1c5c53a6a716e8f57bdbaf134"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marcelklehr/tivoka/zipball/c2ce38abf5f3ff2b56bba1b42844634de3c4c021",
-                "reference": "c2ce38abf5f3ff2b56bba1b42844634de3c4c021",
+                "url": "https://api.github.com/repos/marcelklehr/tivoka/zipball/b1eec80e0acdf8e1c5c53a6a716e8f57bdbaf134",
+                "reference": "b1eec80e0acdf8e1c5c53a6a716e8f57bdbaf134",
                 "shasum": ""
             },
             "require": {
@@ -87,7 +87,7 @@
                 "rpc",
                 "xml-rpc"
             ],
-            "time": "2014-10-28 09:27:51"
+            "time": "2014-10-30 15:27:51"
         }
     ],
     "packages-dev": [
@@ -1245,7 +1245,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "tivoka/tivoka": 20,
         "satooshi/php-coveralls": 20
     },
     "prefer-stable": false,
