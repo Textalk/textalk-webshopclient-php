@@ -2,8 +2,6 @@
 
 namespace Textalk\WebshopClient;
 
-use Tivoka\Client\Request;
-
 class Exception extends \Exception {
   protected static $class_by_code = array(
     -32700 => 'ParseError',
@@ -21,8 +19,8 @@ class Exception extends \Exception {
    *
    * @return Exception Generic or specific subclass
    */
-  public static function factory(\Tivoka\Client\Connection\WebSocket $connection,
-                                 Request $request) {
+  public static function factory(\Textalk\WebshopClient\ConnectionInterface $connection,
+                                 \Tivoka\Client\Request $request) {
     if (array_key_exists($request->error, self::$class_by_code)) {
       $exception_class
         = 'Textalk\\WebshopClient\\Exception\\' . self::$class_by_code[$request->error];
@@ -50,15 +48,16 @@ class Exception extends \Exception {
   // Protected
   //
 
-  protected $request;    ///< Tivoka\Client\Request The request that failed
-  protected $connection; ///< Tivoka\Client\Connection\WebSocket The connection that was used
+  protected $connection; ///< Textalk\WebshopClient\ConnectionInterface The connection that was used.
+  protected $request;    ///< Tivoka\Client\Request The request that failed.
 
   /**
    * Construct a new Exception.
    *
    * This can't be protected since it extends Exception, but it shouldn't be used.  Use factory.
    */
-  public function __construct(\Tivoka\Client\Connection\WebSocket $connection, Request $request) {
+  public function __construct(\Textalk\WebshopClient\ConnectionInterface $connection,
+                              \Tivoka\Client\Request $request) {
     $this->request    = $request;
     $this->connection = $connection;
 
