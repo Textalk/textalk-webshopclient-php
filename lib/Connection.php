@@ -126,7 +126,9 @@ class Connection implements ConnectionInterface {
   }
 
   public function getUri() {
-    return $this->backend;
+    $backend_uri = $this->backend;
+    if (!empty($this->context)) $backend_uri .= '?' . http_build_query($this->context);
+    return $backend_uri;
   }
 
   //

@@ -13,7 +13,7 @@ class ExceptionTest extends PHPUnit_Framework_TestCase {
 
     $request->error = 424242;
     try {
-      throw Exception::factory($connection, $request);
+      throw Exception::factory(new Textalk\WebshopClient\Mock\ConnectionMock, $request);
     }
     catch (Textalk\WebshopClient\Exception $e) {
       $this->assertInstanceOf('Textalk\WebshopClient\\Exception', $e);
