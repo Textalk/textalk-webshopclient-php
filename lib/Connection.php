@@ -12,7 +12,7 @@ use Tivoka\Client\Connection\WebSocket;
  * You can let the Connection-class hold named instances by using Connection::getInstance('name')
  * with different contexts (or even different backend URLs).
  */
-class Connection {
+class Connection implements ConnectionInterface {
   //
   // Static
   //
@@ -73,7 +73,7 @@ class Connection {
 
     $request = $this->connection->sendRequest($method, $params);
 
-    if ($request->error) throw Exception::factory($this->connection, $request);
+    if ($request->error) throw Exception::factory($this, $request);
 
     return $request->result;
   }
@@ -123,6 +123,12 @@ class Connection {
     $this->connection = null;
 
     return $this->context['session'];
+  }
+
+  public function getUri() {
+    $backend_uri = $this->backend;
+    if (!empty($this->context)) $backend_uri .= '?' . http_build_query($this->context);
+    return $backend_uri;
   }
 
   //

@@ -8,15 +8,13 @@ use Tivoka\Client;
 
 class ExceptionTest extends PHPUnit_Framework_TestCase {
   public function testUnspecifiedExceptionCode() {
-    $connection = Client::connect('wss://shop.textalk.se/backend/jsonrpc/v1/');
-    $request    = $connection->sendRequest('Foo', 'bar');
-
+    $request = new Textalk\WebshopClient\Mock\RequestMock('Test.testMethod');
     $request->error = 424242;
     try {
-      throw Exception::factory($connection, $request);
+      throw Exception::factory(new Textalk\WebshopClient\Mock\ConnectionMock, $request);
     }
     catch (Textalk\WebshopClient\Exception $e) {
-      $this->assertInstanceOf('Textalk\WebshopClient\\Exception', $e);
+      $this->assertInstanceOf('Textalk\WebshopClient\Exception', $e);
     }
 
     $this->assertNotNull($e, 'A Textalk\WebshopClient\Exception should be thrown.');
