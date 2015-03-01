@@ -12,6 +12,8 @@ class Exception extends \Exception {
     -32000 => 'ServerError',
      1006  => 'AccessDenied',
      9001  => 'ValidationFailed',
+     9002  => 'NormalizationFailed',
+     9003  => 'ObjectNotFound'
   );
 
   /**
