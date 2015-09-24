@@ -58,7 +58,7 @@ class Connection implements ConnectionInterface {
 
     if (array_key_exists($name, $instances)) return $instances[$name];
 
-    return $instances[$name] = new self($context, $backend);
+    return $instances[$name] = new self($context, $backend, $options);
   }
 
   //
