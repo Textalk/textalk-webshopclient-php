@@ -133,6 +133,10 @@ in your projects composer.json.
 Changelog
 ---------
 
+0.2.5
+
+  * Adding support for http(s) connections (wss as default)
+
 0.2.1
 
  * Using tivoka 3.4.*, avoiding stability-level dev for dependencies.

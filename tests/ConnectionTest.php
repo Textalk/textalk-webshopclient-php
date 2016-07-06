@@ -77,6 +77,39 @@ class ConnectionTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals($session2, $context2['session']);
   }
 
+  public function testHttpCall() {
+    $connection = new Connection(array(), 'http://shop.textalk.se/backend/jsonrpc/v1');
+    $result = $connection->call('Webshop.get', array(22222, 'uid'));
+    $this->assertEquals(22222, $result['uid']);
+  }
+
+  public function testHttpsCall() {
+    $connection = new Connection(array(), 'https://shop.textalk.se/backend/jsonrpc/v1');
+    $result = $connection->call('Webshop.get', array(22222, 'uid'));
+    $this->assertEquals(22222, $result['uid']);
+  }
+
+  public function testWsCall() {
+    $connection = new Connection(array(), 'ws://shop.textalk.se/backend/jsonrpc/v1');
+    $result = $connection->call('Webshop.get', array(22222, 'uid'));
+    $this->assertEquals(22222, $result['uid']);
+  }
+
+  public function testWssCall() {
+    $connection = new Connection(array(), 'wss://shop.textalk.se/backend/jsonrpc/v1');
+    $result = $connection->call('Webshop.get', array(22222, 'uid'));
+    $this->assertEquals(22222, $result['uid']);
+  }
+
+  /**
+   * @expectedException RuntimeException
+   */
+  public function testUnsupportedSchemeCall() {
+    $connection = new Connection(array(), 'unsupported://shop.textalk.se/backend/jsonrpc/v1');
+    $result = $connection->call('Webshop.get', array(22222, 'uid'));
+    $this->assertEquals(22222, $result['uid']);
+  }
+
   /**
    * @expectedException InvalidArgumentException
    */

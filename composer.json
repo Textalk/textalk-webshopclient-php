@@ -6,16 +6,21 @@
     {
       "name": "Fredrik Liljegren",
       "email": "fredrik.liljegren@textalk.se"
+    },
+    {
+      "name": "Sören Jensen",
+      "email": "soren.jensen@textalk.se"
     }
   ],
   "autoload": {
     "psr-4": {"Textalk\\WebshopClient\\": "lib"}
   },
   "require": {
+    "php": ">=5.3",
     "tivoka/tivoka": "3.4.*"
   },
   "require-dev": {
     "phpunit/phpunit": "4.1.*",
-    "satooshi/php-coveralls": "dev-master"
+    "satooshi/php-coveralls": "1.0.*"
   }
 }
