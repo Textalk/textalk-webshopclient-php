@@ -6,6 +6,10 @@
     {
       "name": "Fredrik Liljegren",
       "email": "fredrik.liljegren@textalk.se"
+    },
+    {
+      "name": "Sören Jensen",
+      "email": "soren.jensen@textalk.se"
     }
   ],
   "autoload": {

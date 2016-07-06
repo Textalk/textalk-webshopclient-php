@@ -2,6 +2,7 @@
 
 namespace Textalk\WebshopClient;
 
+use Tivoka\Client\Connection\Http;
 use Tivoka\Client\Connection\WebSocket;
 
 /**
@@ -179,6 +180,15 @@ class Connection implements ConnectionInterface {
   protected function connect() {
     $backend_uri = $this->backend;
     if (!empty($this->context)) $backend_uri .= '?' . http_build_query($this->context);
-    $this->connection = new WebSocket($backend_uri, $this->options);
+    $scheme = parse_url($backend_uri, PHP_URL_SCHEME);
+    switch ($scheme) {
+      case 'http':  // Fall through
+      case 'https': $this->connection = new Http($backend_uri); break;
+      case 'ws':    // Fall through
+      case 'wss':   $this->connection = new WebSocket($backend_uri, $this->options); break;
+      default: {
+        throw new \RuntimeException("Unsupported scheme {$scheme}, http(s) and ws(s) supported.");
+      }
+    }
   }
 }
