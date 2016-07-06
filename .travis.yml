@@ -7,7 +7,7 @@ php:
   - 5.3
 
 script:
-  - make test
+  - make update test
 
 after_script:
   - php vendor/bin/coveralls -v
