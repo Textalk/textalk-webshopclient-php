@@ -1,7 +1,7 @@
 install: composer.phar
 	./composer.phar install
 
-update:
+update: composer.phar
 	./composer.phar update
 
 test: vendor/bin/phpunit build
