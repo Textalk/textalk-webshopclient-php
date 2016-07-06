@@ -102,6 +102,15 @@ class ConnectionTest extends PHPUnit_Framework_TestCase {
   }
 
   /**
+   * @expectedException RuntimeException
+   */
+  public function testUnsupportedSchemeCall() {
+    $connection = new Connection(array(), 'unsupported://shop.textalk.se/backend/jsonrpc/v1');
+    $result = $connection->call('Webshop.get', array(22222, 'uid'));
+    $this->assertEquals(22222, $result['uid']);
+  }
+
+  /**
    * @expectedException InvalidArgumentException
    */
   public function testMagicCallShouldFailWithoutUid() {
