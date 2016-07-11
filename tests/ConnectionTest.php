@@ -101,6 +101,38 @@ class ConnectionTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals(22222, $result['uid']);
   }
 
+  public function testHttpCallWithHeaders() {
+    $path = 'http://shop.textalk.se/backend/jsonrpc/v1';
+    $options = array('headers' => array('foo' => 'bar', 'boo' => 'far'));
+    $connection = new Connection(array(), $path, $options);
+    $result = $connection->call('Webshop.get', array(22222, 'uid'));
+    $this->assertEquals(22222, $result['uid']);
+  }
+
+  public function testHttpsCallWithHeaders() {
+    $path = 'https://shop.textalk.se/backend/jsonrpc/v1';
+    $options = array('headers' => array('foo' => 'bar', 'boo' => 'far'));
+    $connection = new Connection(array(), $path, $options);
+    $result = $connection->call('Webshop.get', array(22222, 'uid'));
+    $this->assertEquals(22222, $result['uid']);
+  }
+
+  public function testWsCallWithHeaders() {
+    $path = 'ws://shop.textalk.se/backend/jsonrpc/v1';
+    $options = array('headers' => array('foo' => 'bar', 'boo' => 'far'));
+    $connection = new Connection(array(), $path, $options);
+    $result = $connection->call('Webshop.get', array(22222, 'uid'));
+    $this->assertEquals(22222, $result['uid']);
+  }
+
+  public function testWssCallWithHeaders() {
+    $path = 'wss://shop.textalk.se/backend/jsonrpc/v1';
+    $options = array('headers' => array('foo' => 'bar', 'boo' => 'far'));
+    $connection = new Connection(array(), $path, $options);
+    $result = $connection->call('Webshop.get', array(22222, 'uid'));
+    $this->assertEquals(22222, $result['uid']);
+  }
+
   /**
    * @expectedException RuntimeException
    */
