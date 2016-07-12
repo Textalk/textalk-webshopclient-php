@@ -183,12 +183,27 @@ class Connection implements ConnectionInterface {
     $scheme = parse_url($backend_uri, PHP_URL_SCHEME);
     switch ($scheme) {
       case 'http':  // Fall through
-      case 'https': $this->connection = new Http($backend_uri); break;
+      case 'https': $this->connection = $this->getHttpConnection($backend_uri); break;
       case 'ws':    // Fall through
-      case 'wss':   $this->connection = new WebSocket($backend_uri, $this->options); break;
+      case 'wss':   $this->connection = $this->getWebsocketConnection($backend_uri); break;
       default: {
         throw new \RuntimeException("Unsupported scheme {$scheme}, http(s) and ws(s) supported.");
       }
     }
   }
+
+  protected function getWebsocketConnection($backend_uri) {
+    return new WebSocket($backend_uri, $this->options);
+  }
+
+  protected function getHttpConnection($backend_uri) {
+    $connection = new Http($backend_uri);
+    if (array_key_exists('headers', $this->options)) {
+      foreach ($this->options['headers'] as $header_key => $header_content) {
+        $connection->setHeader($header_key, $header_content);
+      }
+    }
+    return $connection;
+  }
+
 }

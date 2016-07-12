@@ -133,7 +133,7 @@ in your projects composer.json.
 Changelog
 ---------
 
-0.2.5
+0.2.6
 
   * Adding support for http(s) connections (wss as default)
 
