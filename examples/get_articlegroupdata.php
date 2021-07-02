@@ -16,5 +16,5 @@ $articlegroup = $api->Articlegroup(1347891);
 //  * $api->Articlegroup->get(1347891, 'name')
 //  * $api->call('Articlegroup.get', array(1347891, 'name'))
 var_dump(
-  $articlegroup->get('name')
+    $articlegroup->get('name')
 );

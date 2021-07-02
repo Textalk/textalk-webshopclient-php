@@ -1,47 +1,53 @@
 <?php
 
-use Textalk\WebshopClient\ApiClass;
-use Textalk\WebshopClient\Connection;
+namespace Textalk\WebshopClient;
 
-class ApiClassTest extends PHPUnit_Framework_TestCase {
-  public function testInstatiate() {
-    $class = new ApiClass('Foo');
+use PHPUnit\Framework\TestCase;
 
-    // No classname validation is done before first call.
-    $this->assertInstanceOf('Textalk\WebshopClient\ApiClass', $class);
-  }
+class ApiClassTest extends TestCase
+{
+    public function testInstatiate()
+    {
+        $class = new ApiClass('Foo');
 
-  public function testContextCalls() {
-    $context      = new ApiClass('Context');
-    $context_data = $context->get(true);
+        // No classname validation is done before first call.
+        $this->assertInstanceOf('Textalk\WebshopClient\ApiClass', $class);
+    }
 
-    $this->assertInternalType('array', $context_data);
-    $this->assertArrayHasKey('language', $context_data);
-  }
+    public function testContextCalls()
+    {
+        $context      = new ApiClass('Context');
+        $context_data = $context->get(true);
 
-  public function testGivenConnection() {
-    $connection   = new Connection();
-    $context      = new ApiClass('Context', $connection);
-    $context_data = $context->get(true);
+        $this->assertIsArray($context_data);
+        $this->assertArrayHasKey('language', $context_data);
+    }
 
-    $this->assertInternalType('array', $context_data);
-    $this->assertArrayHasKey('language', $context_data);
-  }
+    public function testGivenConnection()
+    {
+        $connection   = new Connection();
+        $context      = new ApiClass('Context', $connection);
+        $context_data = $context->get(true);
 
-  public function testConnectionGetMethod() {
-    $connection = new Connection();
-    $class = $connection->getApiClass('Foo');
+        $this->assertIsArray($context_data);
+        $this->assertArrayHasKey('language', $context_data);
+    }
 
-    // No classname validation is done before first call.
-    $this->assertInstanceOf('Textalk\WebshopClient\ApiClass', $class);
-  }
+    public function testConnectionGetMethod()
+    {
+        $connection = new Connection();
+        $class = $connection->getApiClass('Foo');
 
-  public function testMagicMethod() {
-    $connection = new Connection();
-    $class = $connection->Foo;
+        // No classname validation is done before first call.
+        $this->assertInstanceOf('Textalk\WebshopClient\ApiClass', $class);
+    }
 
-    // No classname validation is done before first call.
-    $this->assertInstanceOf('Textalk\WebshopClient\ApiClass', $class);
-  }
+    public function testMagicMethod()
+    {
+        $connection = new Connection();
+        $class = $connection->Foo;
 
+        // No classname validation is done before first call.
+        $this->assertInstanceOf('Textalk\WebshopClient\ApiClass', $class);
+    }
 }

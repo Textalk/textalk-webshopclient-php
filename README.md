@@ -124,7 +124,7 @@ Preferred way to install is with [Composer](https://getcomposer.org/).
 Just add
 
     "require": {
-      "textalk/webshop-client": "0.2.*"
+      "textalk/webshop-client": "0.3.*"
     }
 
 in your projects composer.json.
@@ -132,6 +132,11 @@ in your projects composer.json.
 
 Changelog
 ---------
+
+0.3.0
+
+  * Adding support for php ^7.2 and php ^8.0 versions
+  * Dropping support for older php versions
 
 0.2.6
 
