@@ -1,160 +1,175 @@
 <?php
 
-use Textalk\WebshopClient\Connection;
+namespace Textalk\WebshopClient;
 
-class ConnectionTest extends PHPUnit_Framework_TestCase {
-  public function testGetDefaultInstance() {
-    $connection = Connection::getInstance();
-    $this->assertInstanceOf('Textalk\WebshopClient\Connection', $connection);
+use PHPUnit\Framework\TestCase;
+use Textalk\WebshopClient\Exception\MethodNotFound;
 
-    $connection2 = Connection::getInstance();
-    $this->assertSame($connection, $connection2);
-  }
+class ConnectionTest extends TestCase
+{
+    public function testGetDefaultInstance()
+    {
+        $connection = Connection::getInstance();
+        $this->assertInstanceOf('Textalk\WebshopClient\Connection', $connection);
 
-  public function testSimpleCall() {
-    $connection = new Connection();
-
-    $connection->setContext(array('webshop' => 22222));
-
-    $article_uids = $connection->call('Assortment.getArticleUids', array(1347898));
-
-    $this->assertInternalType('array', $article_uids);
-  }
-
-  public function testMethodNotFound() {
-    try {
-      $connection = new Connection(array('webshop' => 22222));
-      $dummy = $connection->call('Foo.bar', array());
-    }
-    catch (Textalk\WebshopClient\Exception\MethodNotFound $e) {
-      $request_json = $e->getRequestJson();
-      $this->assertInternalType('string', $request_json);
-
-      $request = json_decode($request_json);
-
-      // $request should be the jsonrpc
-      $this->assertInternalType('object', $request);
-      $this->assertObjectHasAttribute('id',      $request);
-      $this->assertObjectHasAttribute('jsonrpc', $request);
-      $this->assertEquals('Foo.bar', $request->method);
-
-      $this->assertEquals('wss://shop.textalk.se/backend/jsonrpc/v1/?webshop=22222',
-                          $e->getRequestUri());
+        $connection2 = Connection::getInstance();
+        $this->assertSame($connection, $connection2);
     }
 
-    $this->assertNotNull($e, 'A Textalk\WebshopClient\Exception\MethodNotFound should be thrown.');
-  }
+    public function testSimpleCall()
+    {
+        $connection = new Connection();
 
-  public function testChangeContext() {
-    $connection = new Connection();
+        $connection->setContext(array('webshop' => 22222));
 
-    // Make a call to be sure there is a connection.
-    $initial_context = $connection->call('Context.get', array(true));
-    $this->assertEmpty($initial_context['webshop']);
+        $article_uids = $connection->call('Assortment.getArticleUids', array(1347898));
 
-    $connection->setContext(array('webshop' => 22222));
-    $new_context = $connection->call('Context.get', array(true));
-    $this->assertSame(22222, $new_context['webshop']);
-  }
+        $this->assertIsArray($article_uids);
+    }
 
-  public function testGetSession() {
-    $connection = new Connection(array('webshop' => 22222));
+    public function testMethodNotFound()
+    {
+        try {
+            $connection = new Connection(array('webshop' => 22222));
+            $dummy = $connection->call('Foo.bar', array());
+        } catch (MethodNotFound $e) {
+            $request_json = $e->getRequestJson();
+            $this->assertIsString($request_json);
 
-    // Make a call to be sure there is a connection.
-    $initial_context = $connection->call('Context.get', array(true));
-    $this->assertEmpty($initial_context['session']);
+            $request = json_decode($request_json);
 
-    $session1 = $connection->getSession();
-    $this->assertNotEmpty($session1);
+            // $request should be the jsonrpc
+            $this->assertIsObject($request);
+            $this->assertObjectHasAttribute('id', $request);
+            $this->assertObjectHasAttribute('jsonrpc', $request);
+            $this->assertEquals('Foo.bar', $request->method);
 
-    $context1 = $connection->call('Context.get', array(true));
-    $this->assertEquals($session1, $context1['session']);
+            $this->assertEquals(
+                'wss://shop.textalk.se/backend/jsonrpc/v1/?webshop=22222',
+                $e->getRequestUri()
+            );
+        }
 
-    // Make sure it won't change the session once gotten.
-    $session2 = $connection->getSession();
-    $context2 = $connection->call('Context.get', array(true));
-    $this->assertEquals($session1, $session2);
-    $this->assertEquals($session2, $context2['session']);
-  }
+        $this->assertNotNull($e, 'A Textalk\WebshopClient\Exception\MethodNotFound should be thrown.');
+    }
 
-  public function testHttpCall() {
-    $connection = new Connection(array(), 'http://shop.textalk.se/backend/jsonrpc/v1');
-    $result = $connection->call('Webshop.get', array(22222, 'uid'));
-    $this->assertEquals(22222, $result['uid']);
-  }
+    public function testChangeContext()
+    {
+        $connection = new Connection();
 
-  public function testHttpsCall() {
-    $connection = new Connection(array(), 'https://shop.textalk.se/backend/jsonrpc/v1');
-    $result = $connection->call('Webshop.get', array(22222, 'uid'));
-    $this->assertEquals(22222, $result['uid']);
-  }
+        // Make a call to be sure there is a connection.
+        $initial_context = $connection->call('Context.get', array(true));
+        $this->assertEmpty($initial_context['webshop']);
 
-  public function testWsCall() {
-    $connection = new Connection(array(), 'ws://shop.textalk.se/backend/jsonrpc/v1');
-    $result = $connection->call('Webshop.get', array(22222, 'uid'));
-    $this->assertEquals(22222, $result['uid']);
-  }
+        $connection->setContext(array('webshop' => 22222));
+        $new_context = $connection->call('Context.get', array(true));
+        $this->assertSame(22222, $new_context['webshop']);
+    }
 
-  public function testWssCall() {
-    $connection = new Connection(array(), 'wss://shop.textalk.se/backend/jsonrpc/v1');
-    $result = $connection->call('Webshop.get', array(22222, 'uid'));
-    $this->assertEquals(22222, $result['uid']);
-  }
+    public function testGetSession()
+    {
+        $connection = new Connection(array('webshop' => 22222));
 
-  public function testHttpCallWithHeaders() {
-    $path = 'http://shop.textalk.se/backend/jsonrpc/v1';
-    $options = array('headers' => array('foo' => 'bar', 'boo' => 'far'));
-    $connection = new Connection(array(), $path, $options);
-    $result = $connection->call('Webshop.get', array(22222, 'uid'));
-    $this->assertEquals(22222, $result['uid']);
-  }
+        // Make a call to be sure there is a connection.
+        $initial_context = $connection->call('Context.get', array(true));
+        $this->assertEmpty($initial_context['session']);
 
-  public function testHttpsCallWithHeaders() {
-    $path = 'https://shop.textalk.se/backend/jsonrpc/v1';
-    $options = array('headers' => array('foo' => 'bar', 'boo' => 'far'));
-    $connection = new Connection(array(), $path, $options);
-    $result = $connection->call('Webshop.get', array(22222, 'uid'));
-    $this->assertEquals(22222, $result['uid']);
-  }
+        $session1 = $connection->getSession();
+        $this->assertNotEmpty($session1);
 
-  public function testWsCallWithHeaders() {
-    $path = 'ws://shop.textalk.se/backend/jsonrpc/v1';
-    $options = array('headers' => array('foo' => 'bar', 'boo' => 'far'));
-    $connection = new Connection(array(), $path, $options);
-    $result = $connection->call('Webshop.get', array(22222, 'uid'));
-    $this->assertEquals(22222, $result['uid']);
-  }
+        $context1 = $connection->call('Context.get', array(true));
+        $this->assertEquals($session1, $context1['session']);
 
-  public function testWssCallWithHeaders() {
-    $path = 'wss://shop.textalk.se/backend/jsonrpc/v1';
-    $options = array('headers' => array('foo' => 'bar', 'boo' => 'far'));
-    $connection = new Connection(array(), $path, $options);
-    $result = $connection->call('Webshop.get', array(22222, 'uid'));
-    $this->assertEquals(22222, $result['uid']);
-  }
+        // Make sure it won't change the session once gotten.
+        $session2 = $connection->getSession();
+        $context2 = $connection->call('Context.get', array(true));
+        $this->assertEquals($session1, $session2);
+        $this->assertEquals($session2, $context2['session']);
+    }
 
-  /**
-   * @expectedException RuntimeException
-   */
-  public function testUnsupportedSchemeCall() {
-    $connection = new Connection(array(), 'unsupported://shop.textalk.se/backend/jsonrpc/v1');
-    $result = $connection->call('Webshop.get', array(22222, 'uid'));
-    $this->assertEquals(22222, $result['uid']);
-  }
+    public function testHttpCall()
+    {
+        $connection = new Connection(array(), 'http://shop.textalk.se/backend/jsonrpc/v1');
+        $result = $connection->call('Webshop.get', array(22222, 'uid'));
+        $this->assertEquals(22222, $result['uid']);
+    }
 
-  /**
-   * @expectedException InvalidArgumentException
-   */
-  public function testMagicCallShouldFailWithoutUid() {
-    $api = new Connection(array('webshop' => 22222));
-    $instance = $api->Foo();
-  }
+    public function testHttpsCall()
+    {
+        $connection = new Connection(array(), 'https://shop.textalk.se/backend/jsonrpc/v1');
+        $result = $connection->call('Webshop.get', array(22222, 'uid'));
+        $this->assertEquals(22222, $result['uid']);
+    }
 
-  /**
-   * @expectedException InvalidArgumentException
-   */
-  public function testMagicCallShouldFailWithSeveralUids() {
-    $api = new Connection(array('webshop' => 22222));
-    $instance = $api->Foo(1, 2);
-  }
+    public function testWsCall()
+    {
+        $connection = new Connection(array(), 'ws://shop.textalk.se/backend/jsonrpc/v1');
+        $result = $connection->call('Webshop.get', array(22222, 'uid'));
+        $this->assertEquals(22222, $result['uid']);
+    }
+
+    public function testWssCall()
+    {
+        $connection = new Connection(array(), 'wss://shop.textalk.se/backend/jsonrpc/v1');
+        $result = $connection->call('Webshop.get', array(22222, 'uid'));
+        $this->assertEquals(22222, $result['uid']);
+    }
+
+    public function testHttpCallWithHeaders()
+    {
+        $path = 'http://shop.textalk.se/backend/jsonrpc/v1';
+        $options = array('headers' => array('foo' => 'bar', 'boo' => 'far'));
+        $connection = new Connection(array(), $path, $options);
+        $result = $connection->call('Webshop.get', array(22222, 'uid'));
+        $this->assertEquals(22222, $result['uid']);
+    }
+
+    public function testHttpsCallWithHeaders()
+    {
+        $path = 'https://shop.textalk.se/backend/jsonrpc/v1';
+        $options = array('headers' => array('foo' => 'bar', 'boo' => 'far'));
+        $connection = new Connection(array(), $path, $options);
+        $result = $connection->call('Webshop.get', array(22222, 'uid'));
+        $this->assertEquals(22222, $result['uid']);
+    }
+
+    public function testWsCallWithHeaders()
+    {
+        $path = 'ws://shop.textalk.se/backend/jsonrpc/v1';
+        $options = array('headers' => array('foo' => 'bar', 'boo' => 'far'));
+        $connection = new Connection(array(), $path, $options);
+        $result = $connection->call('Webshop.get', array(22222, 'uid'));
+        $this->assertEquals(22222, $result['uid']);
+    }
+
+    public function testWssCallWithHeaders()
+    {
+        $path = 'wss://shop.textalk.se/backend/jsonrpc/v1';
+        $options = array('headers' => array('foo' => 'bar', 'boo' => 'far'));
+        $connection = new Connection(array(), $path, $options);
+        $result = $connection->call('Webshop.get', array(22222, 'uid'));
+        $this->assertEquals(22222, $result['uid']);
+    }
+
+    public function testUnsupportedSchemeCall()
+    {
+        $connection = new Connection(array(), 'unsupported://shop.textalk.se/backend/jsonrpc/v1');
+        $this->expectException('RuntimeException');
+        $result = $connection->call('Webshop.get', array(22222, 'uid'));
+        $this->assertEquals(22222, $result['uid']);
+    }
+
+    public function testMagicCallShouldFailWithoutUid()
+    {
+        $api = new Connection(array('webshop' => 22222));
+        $this->expectException('InvalidArgumentException');
+        $instance = $api->Foo();
+    }
+
+    public function testMagicCallShouldFailWithSeveralUids()
+    {
+        $api = new Connection(array('webshop' => 22222));
+        $this->expectException('InvalidArgumentException');
+        $instance = $api->Foo(1, 2);
+    }
 }

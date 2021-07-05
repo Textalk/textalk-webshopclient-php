@@ -1,10 +1,10 @@
-Textalk Webshop API-client
+Abicart (Textalk Webshop) API-client
 ==========================
 
-[![Build Status](https://travis-ci.org/Textalk/textalk-webshopclient-php.png)](https://travis-ci.org/Textalk/textalk-webshopclient-php)
+[![Build Status](https://travis-ci.com/Textalk/textalk-webshopclient-php.png)](https://travis-ci.com/Textalk/textalk-webshopclient-php)
 [![Coverage Status](https://coveralls.io/repos/Textalk/textalk-webshopclient-php/badge.png)](https://coveralls.io/r/Textalk/textalk-webshopclient-php)
 
-A library to simplify API-usage on Textalk Webshop API.
+A library to simplify API-usage on Abicart API.
 
 
 Examples:
@@ -124,7 +124,7 @@ Preferred way to install is with [Composer](https://getcomposer.org/).
 Just add
 
     "require": {
-      "textalk/webshop-client": "0.2.*"
+      "textalk/webshop-client": "0.3.*"
     }
 
 in your projects composer.json.
@@ -132,6 +132,11 @@ in your projects composer.json.
 
 Changelog
 ---------
+
+0.3.0
+
+  * Adding support for php ^7.2 and php ^8.0 versions
+  * Dropping support for older php versions
 
 0.2.6
 
