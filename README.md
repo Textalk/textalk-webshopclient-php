@@ -1,7 +1,6 @@
 Abicart (Textalk Webshop) API-client
 ==========================
-
-[![Build Status](https://travis-ci.com/Textalk/textalk-webshopclient-php.png)](https://travis-ci.com/Textalk/textalk-webshopclient-php)
+[![Build Status](https://github.com/Textalk/textalk-webshopclient-php/actions/workflows/acceptance.yml/badge.svg)](https://github.com/Textalk/textalk-webshopclient-php/actions)
 [![Coverage Status](https://coveralls.io/repos/Textalk/textalk-webshopclient-php/badge.png)](https://coveralls.io/r/Textalk/textalk-webshopclient-php)
 
 A library to simplify API-usage on Abicart API.
